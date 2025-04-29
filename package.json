@@ -1,15 +1,15 @@
 {
     "name": "steam-calendar",
     "version": "1.0.0",
-    "author": "Mark McKinney <3046690+markp-mckinney@users.noreply.github.com>",
+    "author": "Mark McKinney <3046690+mpmckinney@users.noreply.github.com>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/markp-mckinney/steam-calendar.git"
+        "url": "https://github.com/mpmckinney/steam-calendar.git"
     },
-    "homepage": "https://github.com/markp-mckinney/steam-calendar",
+    "homepage": "https://github.com/mpmckinney/steam-calendar",
     "bugs": {
-        "url": "https://github.com/markp-mckinney/steam-calendar/issues"
+        "url": "https://github.com/mpmckinney/steam-calendar/issues"
     },
     "type": "module",
     "scripts": {
