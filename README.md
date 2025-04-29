@@ -26,7 +26,7 @@ Run with docker compose (or run equivalent). ex:
 services:
   steam-calendar:
     container_name: steam-calendar
-    image: ghcr.io/markp-mckinney/steam-calendar:node
+    image: ghcr.io/mpmckinney/steam-calendar:node
     restart: no
     volumes:
       - /mnt/user/appdata/caddy/www/steamcal:/out
