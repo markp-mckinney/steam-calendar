@@ -21,14 +21,12 @@ OUT=/appdata/caddy/www/steamcal STEAMID=12345678901234567 npm start
 ```
 
 ### Docker
-TODO: publish to GHCR
-
-Pull this repo and run with Docker compose (or build + run equivalent). ex:
+Run with docker compose (or run equivalent). ex:
 ```
 services:
   steam-calendar:
     container_name: steam-calendar
-    build: .
+    image: ghcr.io/markp-mckinney/steam-calendar:node
     restart: no
     volumes:
       - /mnt/user/appdata/caddy/www/steamcal:/out
