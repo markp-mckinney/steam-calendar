@@ -6,7 +6,7 @@ Initially setup for usage with [homepage](https://github.com/gethomepage/homepag
 
 ## Instructions
 
-The script will write the ICS and JSON file for the given account and exit. To keep things up to date you can schedule it to run on a cron job.
+This app will write the ICS and JSON file for the given account and exit. To keep things up to date you can schedule it to run on a cron job.
 
 ### Environment Variables
 |Variable|Example|Description|
@@ -14,13 +14,16 @@ The script will write the ICS and JSON file for the given account and exit. To k
 |`OUT`|`/appdata/caddy/www/steamcal`|Folder which will be written to.|
 |`STEAMID`|`12345678901234567`|Your Steam profile ID in steamID64 format (profile must be public).|
 
+### Go
+Install with `go install github.com/mpmckinney/steam-calendar` and run directly: `$(go env GOPATH)/bin/steam-calendar`.
+
 ### Docker
 Run with docker compose (or run equivalent). ex:
 ```
 services:
   steam-calendar:
     container_name: steam-calendar
-    image: ghcr.io/mpmckinney/steam-calendar:latest
+    image: ghcr.io/mpmckinney/steam-calendar:main
     restart: no
     volumes:
       - /mnt/user/appdata/caddy/www/steamcal:/out
