@@ -1,6 +1,6 @@
 # Steam Calendar
 
-Query the Steam API to get wishlist items in ICS and JSON formats. The ICS file has all wishlist items that are still available. Items without release dates ("Coming Soon" or other) are set to 90 days from now. The JSON file is filtered to only upcoming releases sorted by release date followed by items without release dates.
+Query the Steam API to get wishlist items in ICS and JSON formats. The ICS file has all wishlist items that are still available filtered to exclude items without release dates ("Coming Soon" or other). The JSON file is filtered to only upcoming releases sorted by release date followed by items without release dates.
 
 Initially setup for usage with [homepage](https://github.com/gethomepage/homepage).
 
@@ -56,10 +56,10 @@ The above examples are utilizing caddy to host the files which homepage then use
           url: https://{{HOMEPAGE_VAR_DOMAIN}}/steamcal/upcoming.json
           display: dynamic-list
           mappings:
-            items: items # optional, the path to the array in the API response. Omit this option if the array is at the root level
+            items: items
             name: name # required, field in each item to use as the item name (left side)
             label: releaseDate # required, field in each item to use as the item label (right side)
-            format: date # optional - format of the label field
+            format: date # or relativeDate
             limit: 100 # optional, limit the number of items to display
             target: https://store.steampowered.com/{storeUrlPath} # optional, makes items clickable with template support
 ```

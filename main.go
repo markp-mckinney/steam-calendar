@@ -6,6 +6,7 @@ import (
 	"math"
 	"slices"
 	"strconv"
+	"strings"
 	"time"
 
 	ics "github.com/arran4/golang-ical"
@@ -84,34 +85,18 @@ func getWishlistItems(steamID, outDir string) ([]StoreItem, error) {
 	return filteredItems, nil
 }
 
-func createIcs(wishlistItems []StoreItem) string {
+func createIcs(storeItems []StoreItem) string {
 	cal := ics.NewCalendar()
 	cal.SetMethod(ics.MethodRequest)
 
-	now := time.Now()
-	ninetyDaysFromNow := now.AddDate(0, 0, 90)
-
-	for _, item := range wishlistItems {
-		event := cal.AddEvent(strconv.Itoa(item.AppID))
-
-		var title string
-		var date time.Time
-
+	for _, item := range storeItems {
 		if item.Release.SteamReleaseDate > 0 {
-			title = item.Name
-			date = time.Unix(int64(item.Release.SteamReleaseDate), 0)
-		} else {
-			title = fmt.Sprintf("%s (%q)", item.Name, item.Release.CustomReleaseDateMessage)
-			date = ninetyDaysFromNow
-
-			// will be used as "additional" in homepage for hover text
-			event.SetLocation(item.Release.CustomReleaseDateMessage)
+			event := cal.AddEvent(strconv.Itoa(item.AppID))
+			event.SetSummary(item.Name)
+			event.SetStartAt(time.Unix(int64(item.Release.SteamReleaseDate), 0))
+			event.SetDescription(item.BasicInfo.ShortDescription)
+			event.SetURL(fmt.Sprintf("https://store.steampowered.com/%s", item.StoreURLPath))
 		}
-
-		event.SetSummary(title)
-		event.SetAllDayStartAt(date)
-		event.SetDescription(item.BasicInfo.ShortDescription)
-		event.SetURL(fmt.Sprintf("https://store.steampowered.com/%s", item.StoreURLPath))
 	}
 
 	return cal.Serialize()
@@ -154,7 +139,12 @@ func createUpcomingJson(storeItems []StoreItem) Upcoming {
 	log.Printf("Got %d upcoming items", len(upcomingItems))
 
 	slices.SortFunc(upcomingItems, func(a, b UpcomingItem) int {
-		return a.RawDate - b.RawDate
+		rawDateDiff := a.RawDate - b.RawDate
+		if rawDateDiff != 0 {
+			return rawDateDiff
+		}
+
+		return strings.Compare(a.Name, b.Name)
 	})
 
 	return Upcoming{upcomingItems}
